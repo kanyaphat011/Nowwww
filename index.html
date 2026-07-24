@@ -6,7 +6,7 @@
     <title>Yummy Express - ระบบบริหารจัดการจัดส่งขนมหวานและอาหารสุดน่ารัก</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts - Cartoonish & Cozy fonts (Itim, Fredoka, Kanit) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Itim&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -48,10 +48,7 @@
 
         .aurora-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             z-index: -1;
             overflow: hidden;
             pointer-events: none;
@@ -66,28 +63,22 @@
         }
 
         .blob-strawberry {
-            width: 450px;
-            height: 450px;
+            width: 450px; height: 450px;
             background: radial-gradient(circle, #FFD0D0 0%, #FF9EAA 100%);
-            top: -10%;
-            left: -5%;
+            top: -10%; left: -5%;
         }
 
         .blob-custard {
-            width: 500px;
-            height: 500px;
+            width: 500px; height: 500px;
             background: radial-gradient(circle, #FFF2D7 0%, #FFE5AD 100%);
-            bottom: -15%;
-            right: -10%;
+            bottom: -15%; right: -10%;
             animation-delay: 4s;
         }
 
         .blob-matcha {
-            width: 400px;
-            height: 400px;
+            width: 400px; height: 400px;
             background: radial-gradient(circle, #F3FDE8 0%, #A8DF8E 100%);
-            top: 40%;
-            left: 50%;
+            top: 40%; left: 50%;
             transform: translateX(-50%);
             animation-delay: 8s;
         }
@@ -116,18 +107,9 @@
             box-shadow: 0 2px 0px rgba(78, 54, 41, 0.1);
         }
 
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #FFF8EE;
-            border-left: 2px solid #4E3629;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #FF9EAA;
-            border: 2px solid #4E3629;
-            border-radius: 5px;
-        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #FFF8EE; border-left: 2px solid #4E3629; }
+        ::-webkit-scrollbar-thumb { background: #FF9EAA; border: 2px solid #4E3629; border-radius: 5px; }
     </style>
 </head>
 <body class="font-sans antialiased text-amber-950 min-h-screen flex flex-col" x-data="deliveryApp()">
@@ -279,12 +261,9 @@
 
     <!-- Main Dashboard View -->
     <div x-show="isLoggedIn" x-cloak class="flex-grow flex flex-col">
-        
-        <!-- Top Navigation -->
         <header class="bg-white border-b-3 border-amber-950 sticky top-0 z-40 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">
-                    
                     <div class="flex items-center space-x-3.5">
                         <span class="p-3 bg-[#FFE5AD] text-amber-950 rounded-2xl border-2 border-amber-950 shadow-[3px_3px_0px_#4E3629]">
                             <span class="text-2xl">🧋</span>
@@ -293,7 +272,6 @@
                             <span class="font-extrabold text-xl tracking-tight text-amber-950 block">Yummy Delivery</span>
                             <span class="text-[10px] text-amber-800 block font-bold uppercase tracking-wider">แอปพลิเคชันส่งของกินสุดคิ้วท์ 🍰</span>
                         </div>
-                        
                         <span class="px-3 py-1 text-[10px] font-bold rounded-full border-2 border-amber-950 shadow-[1px_1px_0px_#4E3629]"
                               :class="{
                                   'bg-[#FF9EAA]/40 text-amber-950': currentUser.role === 'User',
@@ -317,26 +295,22 @@
                             <i class="fa-solid fa-door-open text-xs"></i>
                         </button>
                     </div>
-
                 </div>
             </div>
         </header>
 
-        <!-- Main Content Area -->
         <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-
             <!-- USER VIEW -->
             <div x-show="currentUser.role === 'User'" class="space-y-6" x-cloak>
                 <div class="bg-[#FFE5AD]/60 rounded-[32px] border-3 border-amber-950 p-6 shadow-[6px_6px_0px_rgba(78,54,41,0.08)] relative overflow-hidden">
                     <div class="absolute right-4 top-2 text-[100px] opacity-10 animate-pulse"><i class="fa-solid fa-cake-candles"></i></div>
                     <div class="max-w-xl space-y-2 relative z-10">
                         <div class="inline-flex items-center space-x-2 bg-white px-3 py-1 rounded-full border-2 border-amber-950 text-[10px] font-bold text-amber-950 shadow-[2px_2px_0px_#4E3629]">
-                            <span>🍩 จัดส่งทุกจุดรอบแค้มปัส 5 บาทถ้วน!</span>
+                            <span>🍩 จัดส่งทุกตึกรอบแคมปัส 5 บาทถ้วน!</span>
                         </div>
                         <h2 class="text-2xl font-black text-amber-950">ยินดีต้อนรับสู่อาณาจักรเมนูจัดส่งพัสดุแสนละมุน! 🎉</h2>
                         <p class="text-amber-900/80 text-xs font-bold leading-relaxed">
-                            คุณสามารถสั่งอาหาร ขนมเค้ก นมไข่มุก หรือพัสดุทั่วไป นำส่งถึงมืออย่างรวดเร็ว ปลอดภัย 
-                            พร้อมระบบวิเคราะห์ส่วนแบ่งรายได้ให้พี่ๆ พนักงานส่งของอิ่มเอมใจถึง 70% เลยทีเดียวจ้า!
+                            คุณสามารถสั่งอาหาร ขนมเค้ก นมไข่มุก หรือพัสดุทั่วไป นำส่งถึงมืออย่างรวดเร็ว ปลอดภัย!
                         </p>
                     </div>
                 </div>
@@ -364,16 +338,15 @@
                                        class="w-full px-3.5 py-3 bg-[#FFFBF5] border-2 border-amber-950 rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFE5AD] text-xs font-bold text-amber-950 transition placeholder-amber-900/30">
                             </div>
 
-                            <!-- ปรับแก้เฉพาะตรงนี้: ปุ่มเลือกสถานที่เหลือ 4 แห่ง -->
                             <div>
                                 <label class="block text-xs font-bold text-amber-950 mb-2">📍 เลือกพิกัดจัดส่ง (ค่าบริการคงที่ 5 บาท)</label>
-                                <div class="grid grid-cols-2 gap-2.5">
+                                <div class="grid grid-cols-3 gap-2">
                                     <template x-for="loc in locations" :key="loc.id">
                                         <button type="button" @click="orderForm.location = loc.name; orderForm.locationPrice = loc.price"
-                                                class="p-2.5 border-2 rounded-2xl flex flex-col items-center justify-center space-y-1 transition text-center bubble-button"
+                                                class="p-2 border-2 rounded-2xl flex flex-col items-center justify-center space-y-1 transition text-center bubble-button"
                                                 :class="orderForm.location === loc.name ? 'border-amber-950 bg-[#FFE5AD] text-amber-950 shadow-[3px_3px_0px_#4E3629] font-bold' : 'border-amber-950 bg-white text-amber-900/50 hover:bg-[#FFFBF5]'">
-                                            <span class="text-2xl" x-text="loc.cartoon"></span>
-                                            <span class="text-xs font-extrabold block" x-text="loc.name"></span>
+                                            <span class="text-xl" x-text="loc.cartoon"></span>
+                                            <span class="text-[10px] block" x-text="loc.name"></span>
                                             <span class="text-[9px] font-bold block" :class="orderForm.location === loc.name ? 'text-amber-950' : 'text-amber-900/40'" x-text="`${loc.price} บาท`"></span>
                                         </button>
                                     </template>
@@ -670,11 +643,9 @@
                     </div>
                 </div>
             </div>
-
         </main>
     </div>
 
-    <!-- Alpine App Script -->
     <script>
         function deliveryApp() {
             return {
@@ -685,12 +656,13 @@
                 authForm: { username: '', password: '' },
                 registerForm: { username: '', password: '', role: 'User' },
                 
-                // ชุดข้อมูลสถานที่จัดส่ง 4 แห่งตามโจทย์
                 locations: [
-                    { id: 1, name: 'แปลงเกษตร', price: 5, cartoon: '🌾' },
-                    { id: 2, name: 'ตึกอาคารเรียน', price: 5, cartoon: '🏫' },
-                    { id: 3, name: 'หอประชุม', price: 5, cartoon: '🏛️' },
-                    { id: 4, name: 'โต๊ะแดง', price: 5, cartoon: '🔴' }
+                    { id: 1, name: 'ตึกเรียน A', price: 5, cartoon: '🏫' },
+                    { id: 2, name: 'หอพัก B', price: 5, cartoon: '🏢' },
+                    { id: 3, name: 'โรงอาหาร C', price: 5, cartoon: '🍲' },
+                    { id: 4, name: 'ห้องสมุด D', price: 5, cartoon: '📚' },
+                    { id: 5, name: 'ลานกิจกรรม E', price: 5, cartoon: '🎪' },
+                    { id: 6, name: 'หน้าแค้มปัส F', price: 5, cartoon: '🛝' }
                 ],
 
                 deliveryTypes: [
@@ -701,7 +673,7 @@
                 orderForm: {
                     itemName: '',
                     recipient: '',
-                    location: 'แปลงเกษตร',
+                    location: 'ตึกเรียน A',
                     locationPrice: 5,
                     deliveryType: 'ส่งปกติ (ตามคิว)',
                     deliveryTypePrice: 0,
@@ -711,7 +683,7 @@
                 users: [
                     { username: 'user1', password: 'password', role: 'User', name: 'น้องขนมหวาน' },
                     { username: 'staff1', password: 'password', role: 'Staff', name: 'พี่ไรเดอร์สปีด' },
-                    { username: 'kanyaphat', password: '123456', role: 'Admin', name: 'เจ้าของคาเฟ่' }
+                    { username: 'admin', password: 'password', role: 'Admin', name: 'เจ้าของคาเฟ่' }
                 ],
 
                 orders: [
@@ -720,7 +692,7 @@
                         itemName: 'ชานมไข่มุกหวาน 50%',
                         customerName: 'user1',
                         recipient: 'น้องมิว',
-                        location: 'โต๊ะแดง',
+                        location: 'ตึกเรียน A',
                         deliveryType: 'สปีดด่วนจี๋',
                         totalPrice: 15,
                         notes: 'ขอหลอดดูดอันใหญ่ด้วยครับ',
@@ -751,57 +723,42 @@
                         this.addToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้องจ้า!', 'error');
                     }
                 },
-                async handleRegister() {
-    if (this.registerForm.username.length < 3) {
-        this.addToast('ชื่อผู้ใช้งานต้องยาวกว่า 3 ตัวอักษร', 'warning');
-        return;
-    }
-    
-    // ใส่ Web App URL ของคุณตรงนี้
-    const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbzXE1ebPh5Ho1JT9sK5eSRr5skBC25MkmfeXYSZXaQGIx0UqBcitfEoV-teSCLPfe0/exec';
 
-    try {
-        // ส่งแบบ text/plain เพื่อไม่ให้ติด CORS Block
-        await fetch(googleSheetUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain;charset=utf-8',
-            },
-            body: JSON.stringify({
-                username: this.registerForm.username,
-                password: this.registerForm.password,
-                role: this.registerForm.role
-            })
-        });
-        console.log('ส่งข้อมูลเข้า Google Sheets เรียบร้อย');
-    } catch (error) {
-        console.error('เกิดข้อผิดพลาด:', error);
-    }
-    // บันทึกลงระบบหน้าเว็บ
-    const newUser = {
-        username: this.registerForm.username,
-        password: this.registerForm.password,
-        role: this.registerForm.role,
-        name: this.registerForm.username
-    };
-    
-    this.users.push(newUser);
-    this.currentUser = { ...newUser };
-    this.isLoggedIn = true;
-    
-    this.addToast('สมัครสมาชิกสำเร็จ! 🎉', 'success');
-    this.clearAuthForms();
-}
+                async handleRegister() {
+                    if (this.registerForm.username.length < 3) {
+                        this.addToast('ชื่อผู้ใช้งานต้องยาวกว่า 3 ตัวอักษร', 'warning');
+                        return;
+                    }
+                    
+                    const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbzXE1ebPh5Ho1JT9sk5eSRr5skBC25MkmFeXYSZXaQGiX0UqbcitfEov-teSCLPfe0/exec';
+
+                    try {
+                        await fetch(googleSheetUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                            body: JSON.stringify({
+                                username: this.registerForm.username,
+                                password: this.registerForm.password,
+                                role: this.registerForm.role
+                            })
+                        });
+                        console.log('ส่งข้อมูลเข้า Google Sheets เรียบร้อย');
+                    } catch (error) {
+                        console.error('เกิดข้อผิดพลาด:', error);
+                    }
+
                     const newUser = {
                         username: this.registerForm.username,
                         password: this.registerForm.password,
                         role: this.registerForm.role,
                         name: this.registerForm.username
                     };
+                    
                     this.users.push(newUser);
                     this.currentUser = { ...newUser };
                     this.isLoggedIn = true;
-                    this.addToast('สมัครสมาชิกสำเร็จแล้ว! ยินดีต้อนรับนะ 🎉', 'success');
+                    
+                    this.addToast('สมัครสมาชิกสำเร็จและบันทึกเข้า Google Sheets แล้ว! 🎉', 'success');
                     this.clearAuthForms();
                 },
 
