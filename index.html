@@ -364,7 +364,7 @@
                                        class="w-full px-3.5 py-3 bg-[#FFFBF5] border-2 border-amber-950 rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFE5AD] text-xs font-bold text-amber-950 transition placeholder-amber-900/30">
                             </div>
 
-                            <!-- ปรับแก้โซนปุ่มเลือกสถานที่ตรงนี้ให้เป็น 4 จุด -->
+                            <!-- ปรับแก้เฉพาะตรงนี้: ปุ่มเลือกสถานที่เหลือ 4 แห่ง -->
                             <div>
                                 <label class="block text-xs font-bold text-amber-950 mb-2">📍 เลือกพิกัดจัดส่ง (ค่าบริการคงที่ 5 บาท)</label>
                                 <div class="grid grid-cols-2 gap-2.5">
@@ -685,7 +685,7 @@
                 authForm: { username: '', password: '' },
                 registerForm: { username: '', password: '', role: 'User' },
                 
-                // แก้ไขข้อมูลสถานที่ตรงนี้ให้เหลือ 4 ที่
+                // ชุดข้อมูลสถานที่จัดส่ง 4 แห่งตามโจทย์
                 locations: [
                     { id: 1, name: 'แปลงเกษตร', price: 5, cartoon: '🌾' },
                     { id: 2, name: 'ตึกอาคารเรียน', price: 5, cartoon: '🏫' },
@@ -701,7 +701,7 @@
                 orderForm: {
                     itemName: '',
                     recipient: '',
-                    location: 'แปลงเกษตร', // ค่าเริ่มต้นเปลี่ยนเป็นสถานที่แรก
+                    location: 'แปลงเกษตร',
                     locationPrice: 5,
                     deliveryType: 'ส่งปกติ (ตามคิว)',
                     deliveryTypePrice: 0,
