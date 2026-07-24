@@ -24,12 +24,12 @@
                     },
                     colors: {
                         yummy: {
-                            strawberry: '#FF9EAA', // Sweet pink
-                            custard: '#FFE5AD',    // Soft yellow/cream
-                            matcha: '#A8DF8E',     // Soft pastel green
-                            sky: '#F5F5F5',        // Soft gray/white
-                            choco: '#4E3629',      // Warm chocolate text
-                            berry: '#F38181'       // Vivid pink/red for accents
+                            strawberry: '#FF9EAA',
+                            custard: '#FFE5AD',
+                            matcha: '#A8DF8E',
+                            sky: '#F5F5F5',
+                            choco: '#4E3629',
+                            berry: '#F38181'
                         }
                     }
                 }
@@ -39,12 +39,11 @@
     <style>
         [x-cloak] { display: none !important; }
         
-        /* Soft Bright Aurora Pastel Background Effect */
         body {
-            background-color: #FFFBF5; /* Vanilla cream milk base */
+            background-color: #FFFBF5;
             overflow-x: hidden;
             position: relative;
-            color: #4E3629; /* Dark Chocolate Text color for warm contrast */
+            color: #4E3629;
         }
 
         .aurora-bg {
@@ -99,7 +98,6 @@
             100% { transform: translate(-20px, 30px) scale(0.95) rotate(180deg); }
         }
 
-        /* Cute cartoon bubble shadow style */
         .bubble-shadow {
             box-shadow: 0 10px 0px rgba(78, 54, 41, 0.08);
             border: 3px solid #4E3629;
@@ -118,7 +116,6 @@
             box-shadow: 0 2px 0px rgba(78, 54, 41, 0.1);
         }
 
-        /* Custom Scrollbar for cartoon aesthetic */
         ::-webkit-scrollbar {
             width: 10px;
         }
@@ -175,7 +172,6 @@
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#FFE5AD]/60 rounded-full blur-xl"></div>
             <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-[#FF9EAA]/40 rounded-full blur-xl"></div>
             
-            <!-- Food-themed Header -->
             <div class="text-center space-y-3">
                 <div class="inline-flex p-4 bg-[#FFE5AD] text-amber-950 rounded-full border-3 border-amber-950 shadow-[4px_4px_0px_#4E3629] animate-bounce">
                     <span class="text-4xl">🍔</span>
@@ -245,7 +241,6 @@
                     </div>
                 </div>
                 
-                <!-- Cute Role Selection Option -->
                 <div>
                     <label class="block text-xs font-bold text-amber-950 mb-2">🎈 เลือกสิทธิ์เข้าสู่คลับแอปพลิเคชัน</label>
                     <div class="grid grid-cols-2 gap-3">
@@ -285,12 +280,11 @@
     <!-- Main Dashboard View -->
     <div x-show="isLoggedIn" x-cloak class="flex-grow flex flex-col">
         
-        <!-- Cozy Top Navigation -->
+        <!-- Top Navigation -->
         <header class="bg-white border-b-3 border-amber-950 sticky top-0 z-40 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex items-center justify-between h-20">
                     
-                    <!-- Left Brand Header -->
                     <div class="flex items-center space-x-3.5">
                         <span class="p-3 bg-[#FFE5AD] text-amber-950 rounded-2xl border-2 border-amber-950 shadow-[3px_3px_0px_#4E3629]">
                             <span class="text-2xl">🧋</span>
@@ -300,7 +294,6 @@
                             <span class="text-[10px] text-amber-800 block font-bold uppercase tracking-wider">แอปพลิเคชันส่งของกินสุดคิ้วท์ 🍰</span>
                         </div>
                         
-                        <!-- Badges -->
                         <span class="px-3 py-1 text-[10px] font-bold rounded-full border-2 border-amber-950 shadow-[1px_1px_0px_#4E3629]"
                               :class="{
                                   'bg-[#FF9EAA]/40 text-amber-950': currentUser.role === 'User',
@@ -311,7 +304,6 @@
                         </span>
                     </div>
 
-                    <!-- Right Profile Actions -->
                     <div class="flex items-center space-x-4">
                         <div class="text-right hidden sm:block">
                             <span class="text-xs font-bold text-amber-950 block" x-text="`สวัสดีค้าบ, คุณ ${currentUser.name}`"></span>
@@ -333,15 +325,13 @@
         <!-- Main Content Area -->
         <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-            <!-- ================= USER VIEW ================= -->
+            <!-- USER VIEW -->
             <div x-show="currentUser.role === 'User'" class="space-y-6" x-cloak>
-                
-                <!-- Mascot Banner -->
                 <div class="bg-[#FFE5AD]/60 rounded-[32px] border-3 border-amber-950 p-6 shadow-[6px_6px_0px_rgba(78,54,41,0.08)] relative overflow-hidden">
                     <div class="absolute right-4 top-2 text-[100px] opacity-10 animate-pulse"><i class="fa-solid fa-cake-candles"></i></div>
                     <div class="max-w-xl space-y-2 relative z-10">
                         <div class="inline-flex items-center space-x-2 bg-white px-3 py-1 rounded-full border-2 border-amber-950 text-[10px] font-bold text-amber-950 shadow-[2px_2px_0px_#4E3629]">
-                            <span>🍩 จัดส่งทุกตึกรอบแคมปัส 5 บาทถ้วน!</span>
+                            <span>🍩 จัดส่งทุกจุดรอบแค้มปัส 5 บาทถ้วน!</span>
                         </div>
                         <h2 class="text-2xl font-black text-amber-950">ยินดีต้อนรับสู่อาณาจักรเมนูจัดส่งพัสดุแสนละมุน! 🎉</h2>
                         <p class="text-amber-900/80 text-xs font-bold leading-relaxed">
@@ -351,10 +341,7 @@
                     </div>
                 </div>
 
-                <!-- Main User Grid -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
-                    <!-- Left: Delivery Request Form -->
                     <div class="lg:col-span-5 bg-white rounded-[32px] bubble-shadow p-6 space-y-4">
                         <div class="border-b-2 border-amber-100 pb-3 flex items-center space-x-2">
                             <span class="text-2xl">🍰</span>
@@ -377,15 +364,16 @@
                                        class="w-full px-3.5 py-3 bg-[#FFFBF5] border-2 border-amber-950 rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFE5AD] text-xs font-bold text-amber-950 transition placeholder-amber-900/30">
                             </div>
 
+                            <!-- ปรับแก้โซนปุ่มเลือกสถานที่ตรงนี้ให้เป็น 4 จุด -->
                             <div>
                                 <label class="block text-xs font-bold text-amber-950 mb-2">📍 เลือกพิกัดจัดส่ง (ค่าบริการคงที่ 5 บาท)</label>
-                                <div class="grid grid-cols-3 gap-2">
+                                <div class="grid grid-cols-2 gap-2.5">
                                     <template x-for="loc in locations" :key="loc.id">
                                         <button type="button" @click="orderForm.location = loc.name; orderForm.locationPrice = loc.price"
-                                                class="p-2 border-2 rounded-2xl flex flex-col items-center justify-center space-y-1 transition text-center bubble-button"
+                                                class="p-2.5 border-2 rounded-2xl flex flex-col items-center justify-center space-y-1 transition text-center bubble-button"
                                                 :class="orderForm.location === loc.name ? 'border-amber-950 bg-[#FFE5AD] text-amber-950 shadow-[3px_3px_0px_#4E3629] font-bold' : 'border-amber-950 bg-white text-amber-900/50 hover:bg-[#FFFBF5]'">
-                                            <span class="text-xl" x-text="loc.cartoon"></span>
-                                            <span class="text-[10px] block" x-text="loc.name"></span>
+                                            <span class="text-2xl" x-text="loc.cartoon"></span>
+                                            <span class="text-xs font-extrabold block" x-text="loc.name"></span>
                                             <span class="text-[9px] font-bold block" :class="orderForm.location === loc.name ? 'text-amber-950' : 'text-amber-900/40'" x-text="`${loc.price} บาท`"></span>
                                         </button>
                                     </template>
@@ -417,7 +405,6 @@
                                           class="w-full px-3.5 py-2.5 bg-[#FFFBF5] border-2 border-amber-950 rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFE5AD] text-xs font-bold text-amber-950 transition placeholder-amber-900/30"></textarea>
                             </div>
 
-                            <!-- Summary Card -->
                             <div class="bg-[#FFFBF5] rounded-2xl border-2 border-amber-950 p-4 space-y-1 relative overflow-hidden">
                                 <div class="flex justify-between text-xs text-amber-900/80">
                                     <span>จัดส่งพิกัด (<span class="font-extrabold text-amber-950" x-text="orderForm.location"></span>)</span>
@@ -440,7 +427,6 @@
                         </form>
                     </div>
 
-                    <!-- Right: Tracking List -->
                     <div class="lg:col-span-7 space-y-4">
                         <div class="flex items-center justify-between">
                             <div>
@@ -517,7 +503,7 @@
                 </div>
             </div>
 
-            <!-- ================= STAFF VIEW ================= -->
+            <!-- STAFF VIEW -->
             <div x-show="currentUser.role === 'Staff'" class="space-y-6" x-cloak>
                 <div class="bg-[#A8DF8E]/40 rounded-[32px] border-3 border-amber-950 p-6 shadow-[6px_6px_0px_rgba(78,54,41,0.08)] flex flex-col md:flex-row md:items-center justify-between gap-4">
                     <div class="space-y-1">
@@ -528,7 +514,6 @@
                         <p class="text-amber-900/80 text-xs font-bold">เลือกกดรับออเดอร์ขนมหวาน จัดส่งให้ถึงมือลูกค้า แล้วรับส่วนแบ่ง 70% เข้ากระเป๋าไปเลย!</p>
                     </div>
 
-                    <!-- Staff Stats -->
                     <div class="flex items-center space-x-3 bg-white p-3 rounded-2xl border-2 border-amber-950 shadow-[3px_3px_0px_#4E3629]">
                         <div class="text-right">
                             <span class="text-[10px] text-amber-900/60 block font-bold">รายได้สะสมของคุณ (70%)</span>
@@ -541,7 +526,6 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <!-- Available Orders -->
                     <div class="bg-white rounded-[32px] bubble-shadow p-6 space-y-4">
                         <div class="flex items-center justify-between border-b-2 border-amber-100 pb-3">
                             <div class="flex items-center space-x-2">
@@ -578,7 +562,6 @@
                         </div>
                     </div>
 
-                    <!-- Staff Handled Orders -->
                     <div class="bg-white rounded-[32px] bubble-shadow p-6 space-y-4">
                         <div class="flex items-center justify-between border-b-2 border-amber-100 pb-3">
                             <div class="flex items-center space-x-2">
@@ -616,14 +599,13 @@
                 </div>
             </div>
 
-            <!-- ================= ADMIN VIEW ================= -->
+            <!-- ADMIN VIEW -->
             <div x-show="currentUser.role === 'Admin'" class="space-y-6" x-cloak>
                 <div class="bg-amber-100 rounded-[32px] border-3 border-amber-950 p-6 shadow-[6px_6px_0px_rgba(78,54,41,0.08)]">
                     <h2 class="text-2xl font-black text-amber-950">👑 คาเฟ่แอดมิน - สรุปภาพรวมระบบทั้งหมด</h2>
                     <p class="text-xs text-amber-900/80 font-bold mt-1">ตรวจสอบบิล ยอดรายได้รวม และส่วนแบ่งไรเดอร์ 70% แบบ Realtime</p>
                 </div>
 
-                <!-- Admin Analytics Cards -->
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
                         <div>
@@ -648,7 +630,6 @@
                     </div>
                 </div>
 
-                <!-- Admin Orders Table -->
                 <div class="bg-white rounded-[32px] bubble-shadow p-6 space-y-4">
                     <h3 class="text-sm font-bold text-amber-950 border-b-2 border-amber-100 pb-3">ตารางบันทึกการจัดส่งทั้งหมด</h3>
                     <div class="overflow-x-auto">
@@ -704,13 +685,12 @@
                 authForm: { username: '', password: '' },
                 registerForm: { username: '', password: '', role: 'User' },
                 
+                // แก้ไขข้อมูลสถานที่ตรงนี้ให้เหลือ 4 ที่
                 locations: [
-                    { id: 1, name: 'ตึกเรียน A', price: 5, cartoon: '🏫' },
-                    { id: 2, name: 'หอพัก B', price: 5, cartoon: '🏢' },
-                    { id: 3, name: 'โรงอาหาร C', price: 5, cartoon: '🍲' },
-                    { id: 4, name: 'ห้องสมุด D', price: 5, cartoon: '📚' },
-                    { id: 5, name: 'ลานกิจกรรม E', price: 5, cartoon: '🎪' },
-                    { id: 6, name: 'หน้าแค้มปัส F', price: 5, cartoon: '🛝' }
+                    { id: 1, name: 'แปลงเกษตร', price: 5, cartoon: '🌾' },
+                    { id: 2, name: 'ตึกอาคารเรียน', price: 5, cartoon: '🏫' },
+                    { id: 3, name: 'หอประชุม', price: 5, cartoon: '🏛️' },
+                    { id: 4, name: 'โต๊ะแดง', price: 5, cartoon: '🔴' }
                 ],
 
                 deliveryTypes: [
@@ -721,7 +701,7 @@
                 orderForm: {
                     itemName: '',
                     recipient: '',
-                    location: 'ตึกเรียน A',
+                    location: 'แปลงเกษตร', // ค่าเริ่มต้นเปลี่ยนเป็นสถานที่แรก
                     locationPrice: 5,
                     deliveryType: 'ส่งปกติ (ตามคิว)',
                     deliveryTypePrice: 0,
@@ -731,7 +711,7 @@
                 users: [
                     { username: 'user1', password: 'password', role: 'User', name: 'น้องขนมหวาน' },
                     { username: 'staff1', password: 'password', role: 'Staff', name: 'พี่ไรเดอร์สปีด' },
-                    { username: 'admin', password: 'password', role: 'Admin', name: 'เจ้าของคาเฟ่' }
+                    { username: 'kanyaphat', password: '123456', role: 'Admin', name: 'เจ้าของคาเฟ่' }
                 ],
 
                 orders: [
@@ -740,7 +720,7 @@
                         itemName: 'ชานมไข่มุกหวาน 50%',
                         customerName: 'user1',
                         recipient: 'น้องมิว',
-                        location: 'ตึกเรียน A',
+                        location: 'โต๊ะแดง',
                         deliveryType: 'สปีดด่วนจี๋',
                         totalPrice: 15,
                         notes: 'ขอหลอดดูดอันใหญ่ด้วยครับ',
