@@ -758,7 +758,7 @@
     }
     
     // ใส่ Web App URL ของคุณตรงนี้
-    const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbzXE1ebPh5Ho1JT9sK5eSRr5skBC25MkmfeXYSZXaQGIx0UqBcitfEoV-teSCLPfe0/execc';
+    const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbzXE1ebPh5Ho1JT9sK5eSRr5skBC25MkmfeXYSZXaQGIx0UqBcitfEoV-teSCLPfe0/exec';
 
     try {
         // ส่งแบบ text/plain เพื่อไม่ให้ติด CORS Block
@@ -777,7 +777,6 @@
     } catch (error) {
         console.error('เกิดข้อผิดพลาด:', error);
     }
-
     // บันทึกลงระบบหน้าเว็บ
     const newUser = {
         username: this.registerForm.username,
