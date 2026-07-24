@@ -752,16 +752,46 @@
                     }
                 },
 
-                handleRegister() {
-                    if (this.registerForm.username.length < 3) {
-                        this.addToast('ชื่อผู้ใช้งานต้องยาวกว่า 3 ตัวอักษร', 'warning');
-                        return;
-                    }
-                    const exists = this.users.some(u => u.username === this.registerForm.username);
-                    if (exists) {
-                        this.addToast('ชื่อผู้ใช้งานนี้ถูกใช้งานแล้วจ้า!', 'error');
-                        return;
-                    }
+                async handleRegister() {
+    if (this.registerForm.username.length < 3) {
+        this.addToast('ชื่อผู้ใช้งานต้องยาวกว่า 3 ตัวอักษร', 'warning');
+        return;
+    }
+    
+    // ⚠️ นำ URL จาก Google Apps Script มาวางในเครื่องหมายอัญประกาศ (' ') ตรงนี้
+    const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbzXE1ebPh5Ho1JT9sK5eSRr5skBC25MkmfeXYSZXaQGIx0UqBcitfEoV-teSCLPfe0/exec';
+
+    // 1. ส่งข้อมูลไป Google Sheets
+    try {
+        fetch(googleSheetUrl, {
+            method: 'POST',
+            mode: 'no-cors', // เพื่อป้องกันปัญหา CORS
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                username: this.registerForm.username,
+                password: this.registerForm.password,
+                role: this.registerForm.role
+            })
+        });
+    } catch (error) {
+        console.error('Error sending to Google Sheets:', error);
+    }
+
+    // 2. บันทึกลงระบบหน้าเว็บสำหรับล็อกอินต่อทันที
+    const newUser = {
+        username: this.registerForm.username,
+        password: this.registerForm.password,
+        role: this.registerForm.role,
+        name: this.registerForm.username
+    };
+    
+    this.users.push(newUser);
+    this.currentUser = { ...newUser };
+    this.isLoggedIn = true;
+    
+    this.addToast('สมัครสมาชิกสำเร็จและบันทึกเข้า Google Sheets แล้ว! 🎉', 'success');
+    this.clearAuthForms();
+}
                     const newUser = {
                         username: this.registerForm.username,
                         password: this.registerForm.password,
