@@ -6,7 +6,7 @@
     <title>Yummy Express - ระบบบริหารจัดการจัดส่งขนมหวานและอาหารสุดน่ารัก</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts - Cartoonish & Cozy fonts (Itim, Fredoka, Kanit) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&family=Itim&family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -112,7 +112,7 @@
         ::-webkit-scrollbar-thumb { background: #FF9EAA; border: 2px solid #4E3629; border-radius: 5px; }
     </style>
 </head>
-<body class="font-sans antialiased text-amber-950 min-h-screen flex flex-col" x-data="deliveryApp()">
+<body class="font-sans antialiased text-amber-950 min-h-screen flex flex-col" x-data="deliveryApp()" x-init="initData()">
 
     <div class="aurora-bg">
         <div class="blob blob-strawberry"></div>
@@ -120,7 +120,7 @@
         <div class="blob blob-matcha"></div>
     </div>
 
-    <!-- Toast Container -->
+    <!-- Toast Notifications -->
     <div class="fixed top-5 right-5 z-50 space-y-3 pointer-events-none">
         <template x-for="toast in toasts" :key="toast.id">
             <div x-show="toast.show" 
@@ -148,7 +148,7 @@
         </template>
     </div>
 
-    <!-- Auth View -->
+    <!-- Login / Register Modal -->
     <div x-show="!isLoggedIn" class="flex-grow flex items-center justify-center p-4" x-cloak>
         <div class="w-full max-w-md bg-white rounded-[32px] bubble-shadow p-8 space-y-6 relative overflow-hidden">
             <div class="absolute -top-10 -right-10 w-32 h-32 bg-[#FFE5AD]/60 rounded-full blur-xl"></div>
@@ -194,7 +194,7 @@
                 
                 <div class="text-center pt-2">
                     <p class="text-xs text-amber-900">
-                        ยังไม่มีบัญชีเชฟและลูกค้าส่งของใช่ไหม? 
+                        ยังไม่มีบัญชีใช่ไหม? 
                         <button type="button" @click="isRegisterMode = true; clearAuthForms();" class="text-red-500 font-extrabold hover:underline">มาสมัครสมาชิกตรงนี้จ้า!</button>
                     </p>
                 </div>
@@ -259,7 +259,7 @@
         </div>
     </div>
 
-    <!-- Main Dashboard View -->
+    <!-- Main Application UI -->
     <div x-show="isLoggedIn" x-cloak class="flex-grow flex flex-col">
         <header class="bg-white border-b-3 border-amber-950 sticky top-0 z-40 shadow-sm">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -272,6 +272,7 @@
                             <span class="font-extrabold text-xl tracking-tight text-amber-950 block">Yummy Delivery</span>
                             <span class="text-[10px] text-amber-800 block font-bold uppercase tracking-wider">แอปพลิเคชันส่งของกินสุดคิ้วท์ 🍰</span>
                         </div>
+                        
                         <span class="px-3 py-1 text-[10px] font-bold rounded-full border-2 border-amber-950 shadow-[1px_1px_0px_#4E3629]"
                               :class="{
                                   'bg-[#FF9EAA]/40 text-amber-950': currentUser.role === 'User',
@@ -300,7 +301,8 @@
         </header>
 
         <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <!-- USER VIEW -->
+
+            <!-- Customer View -->
             <div x-show="currentUser.role === 'User'" class="space-y-6" x-cloak>
                 <div class="bg-[#FFE5AD]/60 rounded-[32px] border-3 border-amber-950 p-6 shadow-[6px_6px_0px_rgba(78,54,41,0.08)] relative overflow-hidden">
                     <div class="absolute right-4 top-2 text-[100px] opacity-10 animate-pulse"><i class="fa-solid fa-cake-candles"></i></div>
@@ -310,7 +312,7 @@
                         </div>
                         <h2 class="text-2xl font-black text-amber-950">ยินดีต้อนรับสู่อาณาจักรเมนูจัดส่งพัสดุแสนละมุน! 🎉</h2>
                         <p class="text-amber-900/80 text-xs font-bold leading-relaxed">
-                            คุณสามารถสั่งอาหาร ขนมเค้ก นมไข่มุก หรือพัสดุทั่วไป นำส่งถึงมืออย่างรวดเร็ว ปลอดภัย!
+                            สั่งอาหารและขนมนำส่งถึงมืออย่างรวดเร็ว ปลอดภัย พร้อมระบบวิเคราะห์ส่วนแบ่งรายได้ให้พี่ๆ พนักงานส่งของถึง 70% เลยทีเดียวจ้า!
                         </p>
                     </div>
                 </div>
@@ -328,7 +330,7 @@
                         <form @submit.prevent="submitOrder" class="space-y-4">
                             <div>
                                 <label class="block text-xs font-bold text-amber-950 mb-1.5">🍔 อาหาร/ของที่อยากให้จัดส่ง</label>
-                                <input x-model="orderForm.itemName" type="text" placeholder="เช่น แพนเค้กราดน้ำผึ้ง, ชานมเฉาก๊วย" required 
+                                <input x-model="orderForm.itemName" type="text" placeholder="เช่น แพนเค้กราดน้ำผึ้ง, เค้กเนยฝอยทอง" required 
                                        class="w-full px-3.5 py-3 bg-[#FFFBF5] border-2 border-amber-950 rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFE5AD] text-xs font-bold text-amber-950 transition placeholder-amber-900/30">
                             </div>
 
@@ -347,14 +349,14 @@
                                                 :class="orderForm.location === loc.name ? 'border-amber-950 bg-[#FFE5AD] text-amber-950 shadow-[3px_3px_0px_#4E3629] font-bold' : 'border-amber-950 bg-white text-amber-900/50 hover:bg-[#FFFBF5]'">
                                             <span class="text-xl" x-text="loc.cartoon"></span>
                                             <span class="text-[10px] block" x-text="loc.name"></span>
-                                            <span class="text-[9px] font-bold block" :class="orderForm.location === loc.name ? 'text-amber-950' : 'text-amber-900/40'" x-text="`${loc.price} บาท`"></span>
+                                            <span class="text-[9px] font-bold block" x-text="`${loc.price} บาท`"></span>
                                         </button>
                                     </template>
                                 </div>
                             </div>
 
                             <div>
-                                <label class="block text-xs font-bold text-amber-950 mb-2">🚀 ความเร่งด่วนนำส่งความหิว</label>
+                                <label class="block text-xs font-bold text-amber-950 mb-2">🚀 ความเร่งด่วนนำส่ง</label>
                                 <div class="grid grid-cols-2 gap-3">
                                     <template x-for="type in deliveryTypes" :key="type.id">
                                         <button type="button" @click="orderForm.deliveryType = type.name; orderForm.deliveryTypePrice = type.price"
@@ -365,7 +367,7 @@
                                             </div>
                                             <div>
                                                 <p class="text-[10px]" x-text="type.name"></p>
-                                                <p class="text-[9px] font-bold text-amber-900/60" :class="orderForm.deliveryType === type.name ? 'text-amber-950' : ''" x-text="type.price === 0 ? 'ธรรมดา ส่งฟรี' : `ด่วนพิเศษ +${type.price} บาท`"></p>
+                                                <p class="text-[9px] font-bold" x-text="type.price === 0 ? 'ธรรมดา ส่งฟรี' : `ด่วนพิเศษ +${type.price} บาท`"></p>
                                             </div>
                                         </button>
                                     </template>
@@ -374,7 +376,7 @@
 
                             <div>
                                 <label class="block text-xs font-bold text-amber-950 mb-1.5">✍️ โน้ตเขียนฝากถึงพนักงานส่งของ</label>
-                                <textarea x-model="orderForm.notes" placeholder="เช่น ฝากไว้กับยามใต้ตึก..." rows="2" 
+                                <textarea x-model="orderForm.notes" placeholder="เช่น ขอตะเกียบและช้อนเพิ่ม..." rows="2" 
                                           class="w-full px-3.5 py-2.5 bg-[#FFFBF5] border-2 border-amber-950 rounded-2xl focus:outline-none focus:ring-4 focus:ring-[#FFE5AD] text-xs font-bold text-amber-950 transition placeholder-amber-900/30"></textarea>
                             </div>
 
@@ -404,36 +406,26 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="text-sm font-bold text-amber-950">📋 สถานะการจัดส่งอาหารของคุณ</h3>
-                                <p class="text-[10px] text-amber-900/60">อัปเดตสถานะของกินจากห้องเครื่องส่งของคาเฟ่ได้เลย</p>
+                                <p class="text-[10px] text-amber-900/60">อัปเดตสถานะของกินจากห้องเครื่องส่งของคาเฟ่</p>
                             </div>
                             <span class="px-3 py-1 bg-[#FF9EAA]/30 text-amber-950 text-[10px] font-bold rounded-full border-2 border-amber-950 shadow-[1px_1px_0px_#4E3629]" x-text="`ทั้งหมด ${myOrders.length} เมนู`"></span>
                         </div>
 
                         <div x-show="myOrders.length === 0" class="bg-white rounded-[32px] p-12 text-center border-2 border-dashed border-amber-950/40 space-y-3">
                             <div class="text-5xl">🍩</div>
-                            <div class="max-w-xs mx-auto space-y-1">
-                                <p class="font-bold text-xs text-amber-950">ยังไม่มีใบงานจัดส่งของคุณ</p>
-                                <p class="text-[10px] text-amber-900/50">เมื่อส่งแบบฟอร์มคำขอแล้ว รายการจะแสดงด้านขวานี้ทันที!</p>
-                            </div>
+                            <p class="font-bold text-xs text-amber-950">ยังไม่มีใบงานจัดส่งของคุณ</p>
                         </div>
 
                         <div class="space-y-3 max-h-[580px] overflow-y-auto pr-1">
                             <template x-for="order in myOrders" :key="order.id">
                                 <div class="bg-white rounded-3xl border-2 border-amber-950 p-4 shadow-[4px_4px_0px_#4E3629] relative overflow-hidden">
-                                    <div class="absolute top-0 right-0 w-2 h-full"
-                                         :class="{
-                                             'bg-yellow-400': order.status === 'รอดำเนินการ',
-                                             'bg-blue-400': order.status === 'กำลังจัดส่ง',
-                                             'bg-[#A8DF8E]': order.status === 'จัดส่งสำเร็จ'
-                                         }"></div>
-                                    
                                     <div class="flex items-start justify-between">
                                         <div>
                                             <div class="flex items-center space-x-2">
                                                 <span class="text-xs font-extrabold text-amber-950" x-text="`🍔 ${order.itemName}`"></span>
-                                                <span class="text-[9px] bg-[#FFFBF5] border border-amber-950 px-1.5 py-0.5 rounded font-mono text-amber-900/60" x-text="`บิล: #${order.id}`"></span>
+                                                <span class="text-[9px] bg-[#FFFBF5] border border-amber-950 px-1.5 py-0.5 rounded font-mono" x-text="`บิล: #${order.id}`"></span>
                                             </div>
-                                            <p class="text-[10px] text-amber-900/60 mt-0.5" x-text="`ผู้สั่งออเดอร์: @${order.customerName} | ผู้รับ: ${order.recipient}`"></p>
+                                            <p class="text-[10px] text-amber-900/60 mt-0.5" x-text="`ผู้สั่งออเดอร์: @${order.customerName}`"></p>
                                         </div>
                                         <span class="px-2.5 py-0.5 text-[9px] font-bold rounded-full border-2 border-amber-950"
                                               :class="{
@@ -445,30 +437,21 @@
                                         </span>
                                     </div>
 
-                                    <div class="grid grid-cols-4 gap-2 bg-[#FFFBF5] border-2 border-amber-950/25 p-3 rounded-2xl text-[10px] text-amber-950 mt-3">
-                                        <div>
-                                            <span class="text-amber-900/40 block text-[9px] font-bold">สถานที่ส่ง</span>
-                                            <span class="font-extrabold text-amber-950" x-text="order.location"></span>
-                                        </div>
-                                        <div>
-                                            <span class="text-amber-900/40 block text-[9px] font-bold">ความเร่งด่วน</span>
-                                            <span class="font-bold text-amber-950" x-text="order.deliveryType"></span>
-                                        </div>
-                                        <div>
-                                            <span class="text-amber-900/40 block text-[9px] font-bold">ค่าส่งสุทธิ</span>
-                                            <span class="font-bold text-rose-600" x-text="`${order.totalPrice} บาท`"></span>
-                                        </div>
-                                        <div>
-                                            <span class="text-amber-900/40 block text-[9px] font-bold">ไรเดอร์ผู้ดูแล</span>
-                                            <span class="font-bold text-amber-950" x-text="order.staffName ? `@${order.staffName}` : 'รอไรเดอร์รับงาน'"></span>
-                                        </div>
+                                    <div class="grid grid-cols-4 gap-2 bg-[#FFFBF5] border-2 border-amber-950/25 p-3 rounded-2xl text-[10px] text-amber-950 mt-2">
+                                        <div><span class="text-amber-900/40 block text-[9px] font-bold">สถานที่ส่ง</span><span class="font-extrabold" x-text="order.location"></span></div>
+                                        <div><span class="text-amber-900/40 block text-[9px] font-bold">ความเร่งด่วน</span><span class="font-bold" x-text="order.deliveryType"></span></div>
+                                        <div><span class="text-amber-900/40 block text-[9px] font-bold">เจ้าของรับของ</span><span class="font-bold" x-text="order.recipient"></span></div>
+                                        <div><span class="text-amber-900/40 block text-[9px] font-bold">ยอดค่านำส่ง</span><span class="font-black text-rose-500" x-text="`${order.totalPrice} บาท`"></span></div>
                                     </div>
 
-                                    <template x-if="order.notes">
-                                        <div class="mt-2 text-[10px] text-amber-900/70 bg-amber-50/50 p-2 rounded-xl border border-amber-200">
-                                            <span class="font-bold">📝 โน้ต:</span> <span x-text="order.notes"></span>
-                                        </div>
-                                    </template>
+                                    <div x-show="order.notes" class="text-[10px] text-amber-900/80 bg-red-50/50 p-2 rounded-xl border border-amber-950/20 mt-2">
+                                        <strong class="text-rose-500">บันทึกเพิ่มเติม:</strong> <span x-text="order.notes"></span>
+                                    </div>
+
+                                    <div class="flex items-center justify-between text-[9px] text-amber-900/50 pt-2.5 border-t border-dashed border-amber-950/20 mt-2">
+                                        <span x-text="`ส่งเมื่อเวลา: ${order.createdAt}`"></span>
+                                        <span class="font-bold" :class="order.status === 'จัดส่งสำเร็จ' ? 'text-green-600' : 'text-amber-500'" x-text="order.status === 'จัดส่งสำเร็จ' ? `พนักงานผู้ขับส่ง: @${order.assignee}` : '⏳ รอพนักงานกดรับงาน'"></span>
+                                    </div>
                                 </div>
                             </template>
                         </div>
@@ -476,174 +459,150 @@
                 </div>
             </div>
 
-            <!-- STAFF VIEW -->
+            <!-- Staff View -->
             <div x-show="currentUser.role === 'Staff'" class="space-y-6" x-cloak>
-                <div class="bg-[#A8DF8E]/40 rounded-[32px] border-3 border-amber-950 p-6 shadow-[6px_6px_0px_rgba(78,54,41,0.08)] flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="space-y-1">
-                        <div class="inline-flex items-center space-x-2 bg-white px-3 py-1 rounded-full border-2 border-amber-950 text-[10px] font-bold text-amber-950 shadow-[2px_2px_0px_#4E3629]">
-                            <span>🛵 โหมดไรเดอร์กุ๊กจัดส่งสายสปีด</span>
-                        </div>
-                        <h2 class="text-2xl font-black text-amber-950">กระดานรับงานจัดส่ง & คำนวณส่วนแบ่งรายได้ 💰</h2>
-                        <p class="text-amber-900/80 text-xs font-bold">เลือกกดรับออเดอร์ขนมหวาน จัดส่งให้ถึงมือลูกค้า แล้วรับส่วนแบ่ง 70% เข้ากระเป๋าไปเลย!</p>
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white p-5 rounded-[28px] border-3 border-amber-950 shadow-[5px_5px_0px_#4E3629]">
+                    <div>
+                        <h2 class="text-base font-extrabold text-amber-950 flex items-center gap-2">
+                            <span>🛵</span><span>บอร์ดรับงานจัดส่งพัสดุและขนมหวาน</span>
+                        </h2>
+                        <p class="text-[10px] text-amber-900/60">ตรวจสอบงานและกดยอมรับงานจัดส่งพัสดุเพื่อสะสมเงินปันผล 70%</p>
                     </div>
-
-                    <div class="flex items-center space-x-3 bg-white p-3 rounded-2xl border-2 border-amber-950 shadow-[3px_3px_0px_#4E3629]">
-                        <div class="text-right">
-                            <span class="text-[10px] text-amber-900/60 block font-bold">รายได้สะสมของคุณ (70%)</span>
-                            <span class="text-xl font-black text-emerald-600" x-text="`${calculateStaffEarnings(currentUser.username)} บาท`"></span>
-                        </div>
-                        <div class="p-2.5 bg-[#A8DF8E] text-amber-950 rounded-xl border border-amber-950">
-                            <i class="fa-solid fa-wallet text-lg"></i>
-                        </div>
+                    <div class="flex space-x-2">
+                        <button @click="ordersFilter = 'all'" class="px-3 py-1.5 text-xs font-bold rounded-xl border-2 border-amber-950 bubble-button" :class="ordersFilter === 'all' ? 'bg-[#FFE5AD]' : 'bg-white'">งานทั้งหมด</button>
+                        <button @click="ordersFilter = 'Pending'" class="px-3 py-1.5 text-xs font-bold rounded-xl border-2 border-amber-950 bubble-button" :class="ordersFilter === 'Pending' ? 'bg-yellow-100' : 'bg-white'">รอดำเนินการ</button>
+                        <button @click="ordersFilter = 'Delivering'" class="px-3 py-1.5 text-xs font-bold rounded-xl border-2 border-amber-950 bubble-button" :class="ordersFilter === 'Delivering' ? 'bg-blue-100' : 'bg-white'">กำลังจัดส่ง</button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="bg-white rounded-[32px] bubble-shadow p-6 space-y-4">
-                        <div class="flex items-center justify-between border-b-2 border-amber-100 pb-3">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-2xl">📦</span>
-                                <h3 class="text-sm font-bold text-amber-950">ออเดอร์ว่างที่รอคนไปส่ง</h3>
-                            </div>
-                            <span class="px-2.5 py-1 bg-yellow-100 text-amber-950 text-[10px] font-bold rounded-full border-2 border-amber-950" x-text="`${pendingOrders.length} รายการ`"></span>
-                        </div>
-
-                        <div x-show="pendingOrders.length === 0" class="p-8 text-center border-2 border-dashed border-amber-950/20 rounded-2xl text-xs text-amber-900/50 font-bold">
-                            ขณะนี้ยังไม่มีออเดอร์ใหม่เข้ามาจ้า ☕
-                        </div>
-
-                        <div class="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-                            <template x-for="order in pendingOrders" :key="order.id">
-                                <div class="bg-[#FFFBF5] rounded-2xl border-2 border-amber-950 p-4 space-y-3 hover:border-amber-900 transition">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <span class="text-xs font-black text-amber-950 block" x-text="`🍔 ${order.itemName}`"></span>
-                                            <span class="text-[10px] text-amber-900/60" x-text="`ผู้สั่ง: @${order.customerName} | ส่งให้: ${order.recipient}`"></span>
-                                        </div>
-                                        <span class="text-xs font-black text-rose-600 bg-white px-2 py-1 rounded-xl border border-amber-950" x-text="`ค่าส่ง ${order.totalPrice} บ.`"></span>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <template x-for="order in filteredOrders" :key="order.id">
+                        <div class="bg-white rounded-[28px] border-2 border-amber-950 overflow-hidden flex flex-col justify-between shadow-[4px_4px_0px_#4E3629]">
+                            <div class="p-5 space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h4 class="font-extrabold text-amber-950 text-xs" x-text="`🍔 ${order.itemName}`"></h4>
+                                        <p class="text-[9px] text-amber-900/50 font-mono" x-text="`เลขใบนำส่ง: #${order.id}`"></p>
                                     </div>
-                                    <div class="flex items-center justify-between text-[10px] bg-white p-2 rounded-xl border border-amber-950/20">
-                                        <span>📍 <strong x-text="order.location"></strong></span>
-                                        <span>🚀 <strong x-text="order.deliveryType"></strong></span>
-                                        <span class="text-emerald-700 font-bold" x-text="`ส่วนแบ่ง: ${(order.totalPrice * 0.7).toFixed(1)} บ.`"></span>
-                                    </div>
-                                    <button @click="acceptOrder(order.id)" class="w-full py-2 bg-[#A8DF8E] hover:bg-[#96d47b] text-amber-950 text-xs font-bold rounded-xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] bubble-button">
-                                        รับออเดอร์นี้เล้ย! 🛵
-                                    </button>
+                                    <span class="px-2.5 py-0.5 text-[9px] font-bold rounded-full border-2 border-amber-950"
+                                          :class="{
+                                            'bg-yellow-100': order.status === 'รอดำเนินการ',
+                                            'bg-blue-100': order.status === 'กำลังจัดส่ง',
+                                            'bg-[#A8DF8E]/40': order.status === 'จัดส่งสำเร็จ'
+                                          }"
+                                          x-text="order.status">
+                                    </span>
                                 </div>
-                            </template>
-                        </div>
-                    </div>
 
-                    <div class="bg-white rounded-[32px] bubble-shadow p-6 space-y-4">
-                        <div class="flex items-center justify-between border-b-2 border-amber-100 pb-3">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-2xl">🏁</span>
-                                <h3 class="text-sm font-bold text-amber-950">ออเดอร์ในความดูแลของคุณ</h3>
+                                <div class="space-y-1.5 text-[10px] text-amber-950 bg-[#FFFBF5] p-3 rounded-2xl border border-amber-950/20">
+                                    <div>📍 <strong>สถานที่ส่ง:</strong> <span class="bg-[#FF9EAA]/40 px-1.5 py-0.5 rounded-lg text-[9px] font-bold" x-text="order.location"></span></div>
+                                    <div>🚀 <strong>ความเร่งด่วน:</strong> <span x-text="order.deliveryType"></span></div>
+                                    <div>👤 <strong>ผู้รับพัสดุ:</strong> <span x-text="order.recipient"></span></div>
+                                    <div>🧁 <strong>ลูกค้าผู้สั่ง:</strong> <span x-text="order.customerName"></span></div>
+                                </div>
                             </div>
-                            <span class="px-2.5 py-1 bg-[#A8DF8E]/40 text-amber-950 text-[10px] font-bold rounded-full border-2 border-amber-950" x-text="`${myStaffOrders.length} รายการ`"></span>
-                        </div>
 
-                        <div x-show="myStaffOrders.length === 0" class="p-8 text-center border-2 border-dashed border-amber-950/20 rounded-2xl text-xs text-amber-900/50 font-bold">
-                            คุณยังไม่ได้กดรับออเดอร์ใดๆ
-                        </div>
+                            <div class="bg-[#FFFBF5] p-4 border-t-2 border-amber-950/15 flex items-center justify-between text-xs">
+                                <div>
+                                    <span class="text-[8px] text-amber-900/40 block font-bold uppercase">ค่านำส่งรวม</span>
+                                    <span class="font-extrabold text-amber-950" x-text="`${order.totalPrice} บาท`"></span>
+                                </div>
 
-                        <div class="space-y-3 max-h-[500px] overflow-y-auto pr-1">
-                            <template x-for="order in myStaffOrders" :key="order.id">
-                                <div class="bg-[#FFFBF5] rounded-2xl border-2 border-amber-950 p-4 space-y-3">
-                                    <div class="flex justify-between items-start">
-                                        <div>
-                                            <span class="text-xs font-black text-amber-950 block" x-text="`🍔 ${order.itemName}`"></span>
-                                            <span class="text-[10px] text-amber-900/60" x-text="`ปลายทาง: ${order.recipient} (${order.location})`"></span>
-                                        </div>
-                                        <span class="px-2 py-0.5 text-[9px] font-bold rounded-full border border-amber-950"
-                                              :class="order.status === 'กำลังจัดส่ง' ? 'bg-blue-100 text-blue-900' : 'bg-[#A8DF8E] text-amber-950'"
-                                              x-text="order.status"></span>
-                                    </div>
-                                    <template x-if="order.status === 'กำลังจัดส่ง'">
-                                        <button @click="completeOrder(order.id)" class="w-full py-2 bg-[#FF9EAA] hover:bg-[#ff8a98] text-amber-950 text-xs font-bold rounded-xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] bubble-button">
-                                            กดเพื่อยืนยันจัดส่งสำเร็จ 🎉
+                                <div class="flex space-x-2">
+                                    <template x-if="order.status === 'รอดำเนินการ'">
+                                        <button @click="updateOrderStatus(order.id, 'กำลังจัดส่ง')" class="px-3 py-1.5 bg-[#FFE5AD] text-amber-950 text-[10px] font-bold rounded-xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] bubble-button">
+                                            รับงานวิ่งส่ง 🛵
+                                        </button>
+                                    </template>
+                                    <template x-if="order.status === 'กำลังจัดส่ง' && order.assignee === currentUser.username">
+                                        <button @click="updateOrderStatus(order.id, 'จัดส่งสำเร็จ')" class="px-3 py-1.5 bg-[#A8DF8E] text-amber-950 text-[10px] font-bold rounded-xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] bubble-button">
+                                            นำส่งเสร็จสิ้น 🎉
                                         </button>
                                     </template>
                                 </div>
-                            </template>
+                            </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
             </div>
 
-            <!-- ADMIN VIEW -->
+            <!-- Admin View -->
             <div x-show="currentUser.role === 'Admin'" class="space-y-6" x-cloak>
-                <div class="bg-amber-100 rounded-[32px] border-3 border-amber-950 p-6 shadow-[6px_6px_0px_rgba(78,54,41,0.08)]">
-                    <h2 class="text-2xl font-black text-amber-950">👑 คาเฟ่แอดมิน - สรุปภาพรวมระบบทั้งหมด</h2>
-                    <p class="text-xs text-amber-900/80 font-bold mt-1">ตรวจสอบบิล ยอดรายได้รวม และส่วนแบ่งไรเดอร์ 70% แบบ Realtime</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
+                        <div>
+                            <span class="text-[9px] font-bold text-amber-900/50 block uppercase">รายได้สะสม</span>
+                            <h3 class="text-2xl font-black text-amber-950" x-text="`${calculateStats().revenue} บาท`"></h3>
+                        </div>
+                        <div class="p-3 bg-[#FFE5AD] rounded-2xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] text-xl">🧁</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
+                        <div>
+                            <span class="text-[9px] font-bold text-amber-900/50 block uppercase">ออเดอร์ทั้งหมด</span>
+                            <h3 class="text-2xl font-black text-amber-950" x-text="calculateStats().total"></h3>
+                        </div>
+                        <div class="p-3 bg-[#FF9EAA]/40 rounded-2xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] text-xl">🍩</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
+                        <div>
+                            <span class="text-[9px] font-bold text-amber-900/50 block uppercase">พัสดุค้างรอส่ง</span>
+                            <h3 class="text-2xl font-black text-amber-950" x-text="calculateStats().pending"></h3>
+                        </div>
+                        <div class="p-3 bg-yellow-100 rounded-2xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] text-xl">⏳</div>
+                    </div>
+                    <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
+                        <div>
+                            <span class="text-[9px] font-bold text-amber-900/50 block uppercase">นำส่งสำเร็จ</span>
+                            <h3 class="text-2xl font-black text-amber-950" x-text="calculateStats().completed"></h3>
+                        </div>
+                        <div class="p-3 bg-[#A8DF8E]/40 rounded-2xl border-2 border-amber-950 shadow-[2px_2px_0px_#4E3629] text-xl">🎉</div>
+                    </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
-                        <div>
-                            <p class="text-[10px] font-bold text-amber-900/60 uppercase">ออเดอร์ทั้งหมดในระบบ</p>
-                            <p class="text-2xl font-black text-amber-950" x-text="`${orders.length} บิล`"></p>
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    <div class="lg:col-span-5 bg-white p-6 rounded-[32px] border-2 border-amber-950 shadow-[5px_5px_0px_#4E3629] space-y-6">
+                        <div class="border-b-2 border-amber-100 pb-3 text-center">
+                            <h4 class="font-extrabold text-amber-950 text-sm">🍰 ปันส่วนรายได้คาเฟ่ (30% / 70%)</h4>
                         </div>
-                        <span class="text-3xl">📜</span>
-                    </div>
-                    <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
-                        <div>
-                            <p class="text-[10px] font-bold text-amber-900/60 uppercase">ยอดเงินหมุนเวียนรวม</p>
-                            <p class="text-2xl font-black text-rose-600" x-text="`${totalRevenue} บาท`"></p>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div class="bg-[#FF9EAA]/20 p-3 rounded-2xl border-2 border-[#FF9EAA]">
+                                <span class="text-[9px] text-amber-900/50 font-bold block">ส่วนปันผลระบบ (30%)</span>
+                                <span class="text-lg font-black text-amber-950" x-text="`${calculateStats().adminShare} บาท`"></span>
+                            </div>
+                            <div class="bg-[#A8DF8E]/20 p-3 rounded-2xl border-2 border-[#A8DF8E]">
+                                <span class="text-[9px] text-amber-900/50 font-bold block">ส่วนปันผลพนักงานรวม (70%)</span>
+                                <span class="text-lg font-black text-amber-950" x-text="`${calculateStats().staffShare} บาท`"></span>
+                            </div>
                         </div>
-                        <span class="text-3xl">💵</span>
                     </div>
-                    <div class="bg-white p-5 rounded-3xl border-2 border-amber-950 shadow-[4px_4px_0px_#4E3629] flex items-center justify-between">
-                        <div>
-                            <p class="text-[10px] font-bold text-amber-900/60 uppercase">ส่วนแบ่งจ่ายให้ไรเดอร์ (70%)</p>
-                            <p class="text-2xl font-black text-emerald-600" x-text="`${(totalRevenue * 0.7).toFixed(1)} บาท`"></p>
-                        </div>
-                        <span class="text-3xl">🛵</span>
-                    </div>
-                </div>
 
-                <div class="bg-white rounded-[32px] bubble-shadow p-6 space-y-4">
-                    <h3 class="text-sm font-bold text-amber-950 border-b-2 border-amber-100 pb-3">ตารางบันทึกการจัดส่งทั้งหมด</h3>
-                    <div class="overflow-x-auto">
-                        <table class="w-full text-left text-xs text-amber-950">
-                            <thead>
-                                <tr class="border-b-2 border-amber-950/20 bg-[#FFFBF5]">
-                                    <th class="p-3">รหัสบิล</th>
-                                    <th class="p-3">สินค้า</th>
-                                    <th class="p-3">ผู้สั่ง</th>
-                                    <th class="p-3">ผู้รับ/สถานที่</th>
-                                    <th class="p-3">ไรเดอร์</th>
-                                    <th class="p-3">ยอดรวม</th>
-                                    <th class="p-3">สถานะ</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template x-for="order in orders" :key="order.id">
-                                    <tr class="border-b border-amber-100 hover:bg-[#FFFBF5]">
-                                        <td class="p-3 font-mono text-[10px]" x-text="`#${order.id}`"></td>
-                                        <td class="p-3 font-bold" x-text="order.itemName"></td>
-                                        <td class="p-3" x-text="`@${order.customerName}`"></td>
-                                        <td class="p-3" x-text="`${order.recipient} (${order.location})`"></td>
-                                        <td class="p-3" x-text="order.staffName ? `@${order.staffName}` : '-'"></td>
-                                        <td class="p-3 font-bold text-rose-600" x-text="`${order.totalPrice} บ.`"></td>
-                                        <td class="p-3">
-                                            <span class="px-2 py-0.5 text-[9px] font-bold rounded-full border border-amber-950"
-                                                  :class="{
-                                                      'bg-yellow-100': order.status === 'รอดำเนินการ',
-                                                      'bg-blue-100': order.status === 'กำลังจัดส่ง',
-                                                      'bg-[#A8DF8E]': order.status === 'จัดส่งสำเร็จ'
-                                                  }"
-                                                  x-text="order.status"></span>
-                                        </td>
-                                    </tr>
+                    <div class="lg:col-span-7 space-y-6">
+                        <div class="bg-white p-6 rounded-[32px] border-2 border-amber-950 shadow-[5px_5px_0px_#4E3629] space-y-4">
+                            <div class="flex items-center justify-between border-b-2 border-amber-100 pb-3">
+                                <h4 class="font-extrabold text-amber-950 text-sm">🧁 คำร้องสมัครพนักงานใหม่</h4>
+                                <span class="px-2.5 py-1 bg-[#FF9EAA]/30 text-amber-950 text-[10px] font-bold rounded-full border-2 border-amber-950" x-text="`${pendingStaffList().length} ใบคำร้อง`"></span>
+                            </div>
+                            <div class="space-y-3 max-h-[220px] overflow-y-auto">
+                                <template x-for="req in pendingStaffList()" :key="req.username">
+                                    <div class="bg-[#FFFBF5] border-2 border-amber-950/25 p-3 rounded-2xl flex items-center justify-between">
+                                        <span class="text-xs font-bold" x-text="`ผู้สมัคร: @${req.username}`"></span>
+                                        <div class="flex space-x-2">
+                                            <button @click="rejectStaffRequest(req.username)" class="px-3 py-1 bg-white border-2 border-amber-950 text-red-500 text-[10px] font-bold rounded-xl">ปฏิเสธ</button>
+                                            <button @click="approveStaffRequest(req.username)" class="px-3 py-1 bg-[#A8DF8E] text-amber-950 text-[10px] font-bold rounded-xl border-2 border-amber-950">อนุมัติ 🎉</button>
+                                        </div>
+                                    </div>
                                 </template>
-                            </tbody>
-                        </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </main>
+
+        <footer class="bg-white border-t-3 border-amber-950 py-6 text-center text-[10px] text-amber-900/60 font-bold">
+            <p>&copy; Yummy Express Cute Cafe Logistics 🍩</p>
+        </footer>
     </div>
 
     <script>
@@ -651,115 +610,49 @@
             return {
                 isLoggedIn: false,
                 isRegisterMode: false,
-                currentUser: { username: '', name: '', role: 'User' },
-                
                 authForm: { username: '', password: '' },
                 registerForm: { username: '', password: '', role: 'User' },
-                
+                currentUser: { id: '', name: '', username: '', role: '' },
+                ordersFilter: 'all',
                 locations: [
-                    { id: 1, name: 'ตึกเรียน A', price: 5, cartoon: '🏫' },
-                    { id: 2, name: 'หอพัก B', price: 5, cartoon: '🏢' },
-                    { id: 3, name: 'โรงอาหาร C', price: 5, cartoon: '🍲' },
-                    { id: 4, name: 'ห้องสมุด D', price: 5, cartoon: '📚' },
-                    { id: 5, name: 'ลานกิจกรรม E', price: 5, cartoon: '🎪' },
-                    { id: 6, name: 'หน้าแค้มปัส F', price: 5, cartoon: '🛝' }
+                    { id: 'building', name: 'ตึกอาคาร', price: 5, cartoon: '🏫' },
+                    { id: 'farm', name: 'แปลงเกษตร', price: 5, cartoon: '🧑‍🌾' },
+                    { id: 'hall', name: 'หอประชุม', price: 5, cartoon: '🏟️' }
                 ],
-
                 deliveryTypes: [
-                    { id: 1, name: 'ส่งปกติ (ตามคิว)', price: 0, cartoon: '🐢' },
-                    { id: 2, name: 'สปีดด่วนจี๋', price: 10, cartoon: '⚡' }
+                    { id: 'normal', name: 'ธรรมดา', price: 0, cartoon: '🐢' },
+                    { id: 'express', name: 'ด่วนพิเศษ', price: 10, cartoon: '🚀' }
                 ],
+                orderForm: { itemName: '', recipient: '', location: 'ตึกอาคาร', locationPrice: 5, deliveryType: 'ธรรมดา', deliveryTypePrice: 0, notes: '' },
+                toasts: [],
+                accounts: [],
+                orders: [],
 
-                orderForm: {
-                    itemName: '',
-                    recipient: '',
-                    location: 'ตึกเรียน A',
-                    locationPrice: 5,
-                    deliveryType: 'ส่งปกติ (ตามคิว)',
-                    deliveryTypePrice: 0,
-                    notes: ''
+                initData() {
+                    const savedAccounts = localStorage.getItem('yummy_accounts');
+                    if (savedAccounts) {
+                        this.accounts = JSON.parse(savedAccounts);
+                    } else {
+                        this.accounts = [{ username: 'kanyaphat', password: '123456', role: 'Admin', approved: true }];
+                        this.saveAccounts();
+                    }
+
+                    const savedOrders = localStorage.getItem('yummy_orders');
+                    if (savedOrders) {
+                        this.orders = JSON.parse(savedOrders);
+                    }
                 },
 
-                users: [
-                    { username: 'user1', password: 'password', role: 'User', name: 'น้องขนมหวาน' },
-                    { username: 'staff1', password: 'password', role: 'Staff', name: 'พี่ไรเดอร์สปีด' },
-                    { username: 'admin', password: 'password', role: 'Admin', name: 'เจ้าของคาเฟ่' }
-                ],
-
-                orders: [
-                    {
-                        id: '1001',
-                        itemName: 'ชานมไข่มุกหวาน 50%',
-                        customerName: 'user1',
-                        recipient: 'น้องมิว',
-                        location: 'ตึกเรียน A',
-                        deliveryType: 'สปีดด่วนจี๋',
-                        totalPrice: 15,
-                        notes: 'ขอหลอดดูดอันใหญ่ด้วยครับ',
-                        status: 'รอดำเนินการ',
-                        staffName: null
-                    }
-                ],
-
-                toasts: [],
+                saveAccounts() { localStorage.setItem('yummy_accounts', JSON.stringify(this.accounts)); },
+                saveOrders() { localStorage.setItem('yummy_orders', JSON.stringify(this.orders)); },
 
                 addToast(message, type = 'success') {
                     const id = Date.now();
                     this.toasts.push({ id, message, type, show: true });
                     setTimeout(() => {
-                        const t = this.toasts.find(item => item.id === id);
-                        if (t) t.show = false;
-                    }, 3000);
-                },
-
-                handleLogin() {
-                    const found = this.users.find(u => u.username === this.authForm.username && u.password === this.authForm.password);
-                    if (found) {
-                        this.currentUser = { ...found };
-                        this.isLoggedIn = true;
-                        this.addToast(`ยินดีต้อนรับเข้าสู่ระบบ คุณ ${found.name}! 🧁`, 'success');
-                        this.clearAuthForms();
-                    } else {
-                        this.addToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้องจ้า!', 'error');
-                    }
-                },
-
-                async handleRegister() {
-                    if (this.registerForm.username.length < 3) {
-                        this.addToast('ชื่อผู้ใช้งานต้องยาวกว่า 3 ตัวอักษร', 'warning');
-                        return;
-                    }
-                    
-                    const googleSheetUrl = 'https://script.google.com/macros/s/AKfycbzXE1ebPh5Ho1JT9sk5eSRr5skBC25MkmFeXYSZXaQGiX0UqbcitfEov-teSCLPfe0/exec';
-
-                    try {
-                        await fetch(googleSheetUrl, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                            body: JSON.stringify({
-                                username: this.registerForm.username,
-                                password: this.registerForm.password,
-                                role: this.registerForm.role
-                            })
-                        });
-                        console.log('ส่งข้อมูลเข้า Google Sheets เรียบร้อย');
-                    } catch (error) {
-                        console.error('เกิดข้อผิดพลาด:', error);
-                    }
-
-                    const newUser = {
-                        username: this.registerForm.username,
-                        password: this.registerForm.password,
-                        role: this.registerForm.role,
-                        name: this.registerForm.username
-                    };
-                    
-                    this.users.push(newUser);
-                    this.currentUser = { ...newUser };
-                    this.isLoggedIn = true;
-                    
-                    this.addToast('สมัครสมาชิกสำเร็จและบันทึกเข้า Google Sheets แล้ว! 🎉', 'success');
-                    this.clearAuthForms();
+                        const index = this.toasts.findIndex(t => t.id === id);
+                        if (index !== -1) this.toasts[index].show = false;
+                    }, 4000);
                 },
 
                 clearAuthForms() {
@@ -767,77 +660,151 @@
                     this.registerForm = { username: '', password: '', role: 'User' };
                 },
 
+                handleLogin() {
+                    const enteredUsername = this.authForm.username.toLowerCase().trim();
+                    const matchedUser = this.accounts.find(
+                        acc => acc.username.toLowerCase().trim() === enteredUsername && acc.password === this.authForm.password
+                    );
+
+                    if (matchedUser) {
+                        if (matchedUser.role === 'Staff' && !matchedUser.approved) {
+                            this.addToast('ใบคำร้องสมัครของคุณยังรอการอนุมัติจาก Admin kanyaphat ⏳', 'warning');
+                            return;
+                        }
+
+                        this.currentUser = {
+                            id: 'UID-' + Math.floor(1000 + Math.random() * 9000),
+                            name: matchedUser.username,
+                            username: matchedUser.username,
+                            role: matchedUser.role
+                        };
+                        this.isLoggedIn = true;
+                        this.addToast(`ยินดีต้อนรับคุณ @${matchedUser.username} ✨`, 'success');
+                        this.clearAuthForms();
+                    } else {
+                        this.addToast('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง 🔐', 'error');
+                    }
+                },
+
+                handleRegister() {
+                    const usernameClean = this.registerForm.username.toLowerCase().trim();
+                    if (this.accounts.some(acc => acc.username.toLowerCase() === usernameClean)) {
+                        this.addToast('ชื่อผู้ใช้นี้ถูกลงทะเบียนแล้ว 🍩', 'error');
+                        return;
+                    }
+
+                    if (this.registerForm.password.length < 6) {
+                        this.addToast('รหัสผ่านต้องมีความยาวไม่ต่ำกว่า 6 ตัวอักษร', 'error');
+                        return;
+                    }
+
+                    const isApproved = this.registerForm.role === 'User';
+                    const newAccount = {
+                        username: usernameClean,
+                        password: this.registerForm.password,
+                        role: this.registerForm.role,
+                        approved: isApproved
+                    };
+
+                    this.accounts.push(newAccount);
+                    this.saveAccounts();
+
+                    if (newAccount.role === 'Staff') {
+                        this.addToast('ยื่นสมัครพนักงานสำเร็จ! รอกุ๊กใหญ่ kanyaphat อนุมัติ 📬', 'success');
+                        this.isRegisterMode = false;
+                        this.clearAuthForms();
+                    } else {
+                        this.currentUser = { id: 'UID-' + Math.floor(1000 + Math.random() * 9000), name: newAccount.username, username: newAccount.username, role: newAccount.role };
+                        this.isLoggedIn = true;
+                        this.isRegisterMode = false;
+                        this.addToast('สมัครสมาชิกและเข้าสู่ระบบสำเร็จ!', 'success');
+                        this.clearAuthForms();
+                    }
+                },
+
                 logout() {
                     this.isLoggedIn = false;
-                    this.currentUser = { username: '', name: '', role: 'User' };
-                    this.addToast('ออกจากระบบเรียบร้อยแล้ว ไว้มาใหม่น้า 👋', 'warning');
+                    this.currentUser = { id: '', name: '', username: '', role: '' };
+                    this.addToast('ออกจากระบบเรียบร้อยแล้ว', 'success');
                 },
 
                 submitOrder() {
                     if (!this.orderForm.itemName || !this.orderForm.recipient) {
-                        this.addToast('กรุณากรอกข้อมูลอาหารและชื่อผู้รับให้ครบถ้วนจ้า!', 'warning');
+                        this.addToast('กรุณากรอกข้อมูลให้ครบถ้วน', 'error');
                         return;
                     }
-                    const total = this.orderForm.locationPrice + this.orderForm.deliveryTypePrice;
+
+                    const totalPrice = this.orderForm.locationPrice + this.orderForm.deliveryTypePrice;
+                    const date = new Date();
+                    const formattedDate = `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')} น.`;
+
                     const newOrder = {
-                        id: Math.floor(1000 + Math.random() * 9000).toString(),
+                        id: String(Math.floor(1000 + Math.random() * 9000)),
                         itemName: this.orderForm.itemName,
                         customerName: this.currentUser.username,
                         recipient: this.orderForm.recipient,
                         location: this.orderForm.location,
                         deliveryType: this.orderForm.deliveryType,
-                        totalPrice: total,
-                        notes: this.orderForm.notes,
+                        totalPrice: totalPrice,
                         status: 'รอดำเนินการ',
-                        staffName: null
+                        notes: this.orderForm.notes,
+                        createdAt: formattedDate,
+                        assignee: '-'
                     };
+
                     this.orders.unshift(newOrder);
-                    this.addToast('ส่งคำขอจัดส่งพัสดุเรียบร้อยแล้ว! 🍩', 'success');
+                    this.saveOrders();
+                    this.addToast('ส่งคำขอจัดส่งพัสดุสำเร็จ! 📦', 'success');
+
                     this.orderForm.itemName = '';
                     this.orderForm.recipient = '';
                     this.orderForm.notes = '';
                 },
 
-                get myOrders() {
-                    return this.orders.filter(o => o.customerName === this.currentUser.username);
-                },
-
-                get pendingOrders() {
-                    return this.orders.filter(o => o.status === 'รอดำเนินการ');
-                },
-
-                get myStaffOrders() {
-                    return this.orders.filter(o => o.staffName === this.currentUser.username);
-                },
-
-                acceptOrder(orderId) {
-                    const order = this.orders.find(o => o.id === orderId);
-                    if (order) {
-                        order.status = 'กำลังจัดส่ง';
-                        order.staffName = this.currentUser.username;
-                        this.addToast('คุณได้ทำการกดรับออเดอร์แล้ว ลุยเล้ย! 🛵', 'success');
+                updateOrderStatus(orderId, nextStatus) {
+                    const orderIndex = this.orders.findIndex(o => o.id === orderId);
+                    if (orderIndex !== -1) {
+                        this.orders[orderIndex].status = nextStatus;
+                        if (nextStatus === 'กำลังจัดส่ง') {
+                            this.orders[orderIndex].assignee = this.currentUser.username;
+                        }
+                        this.saveOrders();
+                        this.addToast(`อัปเดตสถานะออเดอร์ #${orderId} แล้ว!`, 'success');
                     }
                 },
 
-                completeOrder(orderId) {
-                    const order = this.orders.find(o => o.id === orderId);
-                    if (order) {
-                        order.status = 'จัดส่งสำเร็จ';
-                        this.addToast('จัดส่งสำเร็จเรียบร้อย! รับโบนัสส่วนแบ่ง 70% 💖', 'success');
+                approveStaffRequest(username) {
+                    const userIdx = this.accounts.findIndex(acc => acc.username === username);
+                    if (userIdx !== -1) {
+                        this.accounts[userIdx].approved = true;
+                        this.saveAccounts();
+                        this.addToast(`อนุมัติพนักงาน @${username} สำเร็จ!`, 'success');
                     }
                 },
 
-                calculateStaffEarnings(staffUsername) {
-                    return this.orders
-                        .filter(o => o.staffName === staffUsername && o.status === 'จัดส่งสำเร็จ')
-                        .reduce((sum, o) => sum + (o.totalPrice * 0.7), 0)
-                        .toFixed(1);
+                rejectStaffRequest(username) {
+                    const userIdx = this.accounts.findIndex(acc => acc.username === username);
+                    if (userIdx !== -1) {
+                        this.accounts.splice(userIdx, 1);
+                        this.saveAccounts();
+                        this.addToast(`ปฏิเสธคำขอของ @${username} แล้ว`, 'error');
+                    }
                 },
 
-                get totalRevenue() {
-                    return this.orders
-                        .filter(o => o.status === 'จัดส่งสำเร็จ')
-                        .reduce((sum, o) => sum + o.totalPrice, 0);
+                get myOrders() { return this.orders.filter(o => o.customerName === this.currentUser.username); },
+                get filteredOrders() {
+                    if (this.ordersFilter === 'Pending') return this.orders.filter(o => o.status === 'รอดำเนินการ');
+                    if (this.ordersFilter === 'Delivering') return this.orders.filter(o => o.status === 'กำลังจัดส่ง');
+                    return this.orders;
+                },
+                pendingStaffList() { return this.accounts.filter(acc => acc.role === 'Staff' && !acc.approved); },
+                calculateStats() {
+                    let revenue = 0, total = this.orders.length, pending = 0, completed = 0;
+                    this.orders.forEach(o => {
+                        if (o.status === 'จัดส่งสำเร็จ') { revenue += o.totalPrice; completed++; }
+                        else { pending++; }
+                    });
+                    return { revenue, total, pending, completed, adminShare: Math.round(revenue * 0.3), staffShare: Math.round(revenue * 0.7) };
                 }
             }
         }
